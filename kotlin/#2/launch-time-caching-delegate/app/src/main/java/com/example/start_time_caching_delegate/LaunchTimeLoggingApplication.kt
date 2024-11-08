@@ -2,7 +2,7 @@ package com.example.start_time_caching_delegate
 
 import android.app.Application
 import com.example.start_time_caching_delegate.delegates.LaunchTimeCachingDelegate
-import com.example.start_time_caching_delegate.unil.startLaunchTimeLogging
+import com.example.start_time_caching_delegate.util.startLaunchTimeLogging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
