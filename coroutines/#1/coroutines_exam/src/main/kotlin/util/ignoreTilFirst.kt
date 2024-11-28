@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.util.concurrent.TimeUnit
 
-// ignoreTilFirst() - аналог оператора из throttleFirst() из RxJava для Flow
+// ignoreTilFirst() - аналог оператора из throttleFirst() RxJava для Flow
 
 suspend fun <T> Flow<T>.ignoreTilFirst(
     ignoreTime: Long,
