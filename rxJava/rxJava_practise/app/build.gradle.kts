@@ -66,6 +66,12 @@ dependencies {
     implementation ("com.jakewharton.rxbinding4:rxbinding-appcompat:4.0.0")
     implementation ("com.jakewharton.rxbinding4:rxbinding-core:4.0.0")
 
+    //RxBinding
+    implementation ("io.reactivex.rxjava2:rxjava:2.2.19")
+    implementation ("io.reactivex.rxjava2:rxandroid:2.1.1")
+    implementation ("com.jakewharton.rxbinding2:rxbinding:2.2.0")
+    implementation ("com.jakewharton.rxbinding2:rxbinding-kotlin:2.2.0")
+
     //RxAndroid
     implementation ("io.reactivex.rxjava3:rxjava:3.1.5")
 
