@@ -8,7 +8,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvVacanciesList"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="200dp"
         android:layout_marginTop="32dp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="52dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="36dp"
         android:text="0"
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,10 +30,10 @@
         android:id="@+id/startTimerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:text="Start timer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.781"
+        app:layout_constraintHorizontal_bias="0.836"
         app:layout_constraintStart_toEndOf="@+id/timerText"
         app:layout_constraintTop_toBottomOf="@+id/rvVacanciesList" />
 
@@ -41,17 +41,29 @@
         android:id="@+id/debouncedEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="132dp"
         android:ems="10"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvVacanciesList" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvDiscountCardList"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="452dp"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.fragment.app.FragmentContainerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/vacancyFragmentContainerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/vacancyFragmentContainerView"/>
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="59dp" />
 
 </android.support.constraint.ConstraintLayout>

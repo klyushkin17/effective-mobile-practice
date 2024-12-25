@@ -9,7 +9,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
 
 
-class VacancyListAdapter (
+class VacancyListAdapter(
     private val vacancyList: List<VacancyDto>,
 ) : RecyclerView.Adapter<VacancyListAdapter.VacanciesViewHolder>() {
 

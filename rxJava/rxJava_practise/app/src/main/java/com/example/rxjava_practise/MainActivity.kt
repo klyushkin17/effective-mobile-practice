@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rxjava_practise.data.remote.HhRuApi
+import com.example.rxjava_practise.data.remote.dto.DiscountCardDto
 import com.example.rxjava_practise.data.remote.dto.VacancyDto
 import com.example.rxjava_practise.databinding.ActivityMainBinding
 import com.jakewharton.rxbinding2.widget.RxTextView
@@ -21,6 +22,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
+@Suppress("UNREACHABLE_CODE")
 class MainActivity : AppCompatActivity() {
     private val BASE_URL = "https://klyushkin17.github.io/hh-api/"
     private val TAG = "VacanciesList"
@@ -30,6 +32,8 @@ class MainActivity : AppCompatActivity() {
     private var debouncedEditTestDisposable: Disposable? = null
     private var vacanciesList: MutableList<VacancyDto>? = null
     private var vacanciesListAdapter: VacancyListAdapter? = null
+    private var discountCardsList: List<DiscountCardDto> = emptyList()
+    private var discountCardsListAdapter: DiscountCardsListAdapter? = null
 
     private lateinit var binding: ActivityMainBinding
 
@@ -44,10 +48,12 @@ class MainActivity : AppCompatActivity() {
         timerDisposable = CompositeDisposable()
 
         initVacanciesListRecyclerView()
+        initDiscountCardsRecyclerView()
         getVacancies()
+        getDiscountCards()
 
         binding.startTimerButton.setOnClickListener {
-            startTestTimerObservable()
+            startTimerObservable()
         }
 
         debouncedEditTestDisposable = RxTextView
@@ -62,6 +68,12 @@ class MainActivity : AppCompatActivity() {
         binding.rvVacanciesList.setHasFixedSize(true)
         val layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(this)
         binding.rvVacanciesList.layoutManager = layoutManager
+    }
+
+    private fun initDiscountCardsRecyclerView() {
+        binding.rvDiscountCardList.setHasFixedSize(true)
+        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
+        binding.rvDiscountCardList.layoutManager = layoutManager
     }
 
     private fun getVacancies() {
@@ -93,7 +105,47 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun startTestTimerObservable() {
+    private fun getDiscountCards() {
+        compositeDisposable?.add(
+            getDiscountCardsFirstSource()
+                .mergeWith(getDiscountCardsSecondSource())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({ receivedDiscountCardsList ->
+                    discountCardsList = discountCardsList + receivedDiscountCardsList
+                    discountCardsListAdapter = DiscountCardsListAdapter(discountCardsList)
+
+                    binding.rvDiscountCardList.adapter = discountCardsListAdapter
+                }, {
+                    Log.d(TAG, "Getting discount cards error: ${it.localizedMessage}")
+                })
+        )
+    }
+
+    // Для реализации задания 5 б) была добавлена функция .onErrorResumeNext, которая передает
+    // пустой лист получателю, если произошла ошибка.
+    // Для реализации задания 5 а) достаточно закомментировать использование .onErrorResumeNext
+    private fun getDiscountCardsFirstSource(
+    ): Observable<List<DiscountCardDto>> = Observable.create { emitter ->
+        throw IllegalArgumentException()
+        emitter.onNext(listOf(
+            DiscountCardDto("Magnit"),
+            DiscountCardDto("Sony"),
+            DiscountCardDto("Ashan")
+        ))
+    }.onErrorResumeNext { Observable.just(emptyList()) }
+
+    private fun getDiscountCardsSecondSource(
+    ): Observable<List<DiscountCardDto>> = Observable.create { emitter ->
+        //throw IllegalArgumentException()
+        emitter.onNext(listOf(
+            DiscountCardDto("Pyatorochka"),
+            DiscountCardDto("DNS"),
+            DiscountCardDto("MVideo")
+        ))
+    }.onErrorResumeNext { Observable.just(emptyList()) }
+
+    private fun startTimerObservable() {
         timerDisposable?.clear()
         timerDisposable?.add(Observable.interval(1000L, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())
